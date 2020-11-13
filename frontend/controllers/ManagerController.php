@@ -500,4 +500,26 @@ class ManagerController extends Controller
 
         return $this->redirect(['manager/banner-image']);
     }
+
+    public function actionUpdateAddImage()
+    {
+        $data = \Yii::$app->request->post();
+        $imageData = $data['imageData'];
+        list($type, $imageData) = explode(';', $imageData);
+        list(, $imageData)      = explode(',', $imageData);
+        $image = base64_decode($imageData);
+        $success = false;
+        if($data['mainImage'] == 'true') {
+            $success = file_put_contents(Find::basePath().'/thumbnail_'.$data['imageName'], $image);
+        }
+        else{
+            $success = file_put_contents(FindImage::basePath().'/thumbnail_'.$data['imageName'], $image);
+        }
+
+        $result = [
+            'success' => $success,
+            'test' => $data['mainImage']
+        ];
+        return json_encode($result);
+    }
 }

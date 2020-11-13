@@ -7,15 +7,22 @@ use common\models\Find;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Find */
-/* @var $form ActiveForm */   $script = <<< JS
+/* @var $form ActiveForm */
+$host = Yii::$app->urlManager->createAbsoluteUrl(['/']);
+$csrf_token = Yii::$app->request->csrfToken;
+$script = <<< JS
         
     $("textarea[name='Find[three_d]'").keyup(function() {
         $(this).val($(this).val().replace(/width: 400px/gi, 'width: 100%'));
     });
 
+    host = '$host';
+    csrf_token = '$csrf_token';
+
 JS;
 
 $this->registerJs($script, yii\web\View::POS_READY);
+\frontend\assets\ImgEdAsset::register($this);
 ?>
 <div class="manager-_find_form">
 
@@ -323,7 +330,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
         </div>
         <?php if (isset($model->id) and !empty($model->id)): ?>
             <div class="col-xs-6">
-                <?= Html::img(Find::SRC_IMAGE . '/' . $model->thumbnailImage, ['class' => 'img-responsive']) ?>
+                <?= Html::img(Find::SRC_IMAGE . '/' . $model->thumbnailImage, ['id' => $model->id, 'class' => 'img-responsive img-preview', 'alt' => $model->image]) ?>
                 <br>
             </div>
         <?php endif; ?>

@@ -16,6 +16,17 @@ $this->params['breadcrumbs'] = [
     ['label' => $model->name, 'url' => ['/manager/find-update', 'id' => $model->id]],
     $this->title,
 ];
+$host = Yii::$app->urlManager->createAbsoluteUrl(['/']);
+$csrf_token = Yii::$app->request->csrfToken;
+$script = <<< JS
+
+    host = '$host';
+    csrf_token = '$csrf_token';
+
+JS;
+$this->registerJs($script, yii\web\View::POS_READY);
+
+\frontend\assets\ImgEdAsset::register($this);
 
 ?>
 <h1><?= Html::encode($this->title) ?></h1>
@@ -49,7 +60,7 @@ $this->params['breadcrumbs'] = [
                             'method' => 'post',
                         ]
                     ]) ?>
-                    <?= Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['class' => 'img-responsive img-thumbnail']) ?>
+                    <?= Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['id' => 'image' . $item->id, 'class' => 'img-responsive img-thumbnail img-preview', 'alt' => $item->image]) ?>
                     <br>
                 </div>
             </div>
