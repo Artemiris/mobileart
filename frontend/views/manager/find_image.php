@@ -60,7 +60,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
                             'method' => 'post',
                         ]
                     ]) ?>
-                    <?= Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['id' => 'image' . $item->id, 'class' => 'img-responsive img-thumbnail img-preview', 'alt' => $item->image]) ?>
+                    <?= Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['id' => 'image' . $item->id . ' ' . $item->author .' '. $item->copyright . ' ' . $item->license, 'class' => 'img-responsive img-thumbnail img-preview', 'alt' => $item->image]) ?>
                     <br>
                 </div>
             </div>

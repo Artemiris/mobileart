@@ -330,7 +330,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
         </div>
         <?php if (isset($model->id) and !empty($model->id)): ?>
             <div class="col-xs-6">
-                <?= Html::img(Find::SRC_IMAGE . '/' . $model->thumbnailImage, ['id' => $model->id, 'class' => 'img-responsive img-preview', 'alt' => $model->image]) ?>
+                <?= Html::img(Find::SRC_IMAGE . '/' . $model->thumbnailImage, ['id' => $model->id . ' ' . $model->author .' '. $model->copyright . ' ' . $model->license, 'class' => 'img-responsive img-preview', 'alt' => $model->image]) ?>
                 <br>
             </div>
         <?php endif; ?>

@@ -114,7 +114,7 @@ class Find extends ActiveRecord
         return [
             [['name', 'name_en', 'site_id'], 'required'],
             [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d'], 'string'],
-            ['image', 'string'],
+            [['image', 'author', 'copyright', 'license'], 'string'],
             ['year', 'integer'],
             [['site_id'], 'exist', 'skipOnError' => true, 'targetClass' => Site::className(), 'targetAttribute' => ['site_id' => 'id']],
             [['fileImage'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],

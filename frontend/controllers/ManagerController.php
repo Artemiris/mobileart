@@ -508,12 +508,23 @@ class ManagerController extends Controller
         list($type, $imageData) = explode(';', $imageData);
         list(, $imageData)      = explode(',', $imageData);
         $image = base64_decode($imageData);
+        $id = intval($data['imageId']);
         $success = false;
         if($data['mainImage'] == 'true') {
             $success = file_put_contents(Find::basePath().'/thumbnail_'.$data['imageName'], $image);
+            $find = Find::find()->where(['id'=>$id])->one();
+            $find->author = $data['imageAuthor'];
+            $find->copyright = $data['imageCopyright'];
+            $find->license = $data['imageLicense'];
+            $find->save(false);
         }
         else{
             $success = file_put_contents(FindImage::basePath().'/thumbnail_'.$data['imageName'], $image);
+            $find_image = FindImage::find()->where(['image'=>$data['imageName']])->one();
+            $find_image->author = $data['imageAuthor'];
+            $find_image->copyright = $data['imageCopyright'];
+            $find_image->license = $data['imageLicense'];
+            $find_image->save();
         }
 
         $result = [

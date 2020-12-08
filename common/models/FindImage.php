@@ -16,6 +16,9 @@ use Imagine\Image\Box;
  * @property integer $find_id
  * @property integer $find
  * @property string $image
+ * @property string $author
+ * @property string $copyright
+ * @property string $license
  */
 class FindImage extends ActiveRecord
 {
@@ -37,7 +40,7 @@ class FindImage extends ActiveRecord
     {
         return [
             [['find_id', 'image'], 'required'],
-            [['image'], 'string'],
+            [['image', 'author', 'copyright', 'license'], 'string'],
             [['find_id'], 'exist', 'skipOnError' => true, 'targetClass' => Find::className(), 'targetAttribute' => ['find_id' => 'id']],
         ];
     }
