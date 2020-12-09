@@ -12,7 +12,7 @@ class ImgEdAsset extends \yii\web\AssetBundle
     public $js = [
         'js/jquery.fancybox.min.js',
         'js/cropper.min.js',
-        'js/imged.js?3'
+        'js/imged.js?20201209'
     ];
 
     public $css = [
