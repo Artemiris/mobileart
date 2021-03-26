@@ -52,15 +52,15 @@ if (!empty($find->technique)) {
 
 if (!empty($find->traces_disposal)) {
     $tabs[] = [
-        'label' => '<i class="fas fa-bone hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Traces of disposal') . '</span>',
+        'label' => '<i class="fas fa-bone hidden-xs hidden-sm"></i>' . '<span class="visible-xs visible-sm"> ' . Yii::t('find', 'Use-wear traces') . '</span>',
         'headerOptions' => [
             'class' => 'tab-header',
             'data-toggle' => 'tooltip',
             'data-placement' => 'top',
-            'title' => Yii::t('find', 'Traces of disposal'),
+            'title' => Yii::t('find', 'Use-wear traces'),
         ],
         'content' => $this->render('_find_tab', [
-            'title' => Yii::t('find', 'Traces of disposal'),
+            'title' => Yii::t('find', 'Use-wear traces'),
             'content' => $find->traces_disposal
         ]),
     ];
