@@ -38,9 +38,8 @@ $script = <<< JS
             url: modelURL,
             success: function(data) {
                 let d = JSON.parse(data);
-                $('#copyright').html('<p style="padding:4px; margin:4px;">' + $author + ': ' + (d[0] || '') + 
-                '</br>' + $copyright + ': ' + (d[1] || '') + 
-                '</br>' + $license + ': ' + (d[2] || '') + '</p>');
+                $('#copyright').html('<p style="padding:4px; margin:4px;">' + $author + ': ' + (d.author || '') + 
+                '</br>' + $copyright + ': ' + (d.copyright || '') + '</p>');
             }
         });
     }
