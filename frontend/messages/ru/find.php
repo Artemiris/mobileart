@@ -14,7 +14,7 @@ return [
     'The author of the excavations' => 'Автор раскопок',
     'Links' => 'Ссылки',
     'Publications' => 'Публикации',
-    'Page authors' => 'Авторы страницы'
+    'Page authors' => 'Авторы страницы',
     'Model authors' => 'Авторы модели',
     'Model copyright' => 'Правообладатель модели',
 ];
