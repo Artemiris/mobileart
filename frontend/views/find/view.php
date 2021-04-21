@@ -331,6 +331,7 @@ if (!empty($find->publication)) {
         <?php endif; ?>
     </div>
 <?php endif; ?>
-
-<div class="clearfix"></div>
-<p class="page-author"><?= Yii::t('find', 'Page author') . ': ' . $find->author_page ?></p>
+<?php if (isset($find->author_page)): ?>
+    <div class="clearfix"></div>
+    <p class="page-author"><?= Yii::t('find', 'Page author') . ': ' . $find->author_page ?></p>
+<?php endif; ?>
