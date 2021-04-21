@@ -19,8 +19,8 @@ $this->params['breadcrumbs'] = [
     $this->title,
 ];
 $lang = json_encode(Yii::$app->language);
-$author = json_encode(Yii::t('find', 'Authors'));
-$copyright = json_encode(Yii::t('find', 'Copyright'));
+$author = json_encode(Yii::t('find', 'Model authors'));
+$copyright = json_encode(Yii::t('find', 'Model copyright'));
 
 $script = <<< JS
         
