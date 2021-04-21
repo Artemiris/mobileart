@@ -50,8 +50,10 @@ use Imagine\Image\Box;
  * @property string $fileImage
  * @property string $images
  * @property string $fileImages
- * @property string $thumbnailImage,
- * @property string $three_d,
+ * @property string $thumbnailImage
+ * @property string $three_d
+ * @property string $author_page
+ * @property string $author_page_en
  */
 class Find extends ActiveRecord
 {
@@ -101,6 +103,7 @@ class Find extends ActiveRecord
                     'author_excavation',
                     'year',
                     'link',
+                    'author_page'
                 ]
             ],
         ];
@@ -113,7 +116,7 @@ class Find extends ActiveRecord
     {
         return [
             [['name', 'name_en', 'site_id'], 'required'],
-            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d'], 'string'],
+            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d', 'author_page'], 'string'],
             ['image', 'string'],
             ['year', 'integer'],
             [['site_id'], 'exist', 'skipOnError' => true, 'targetClass' => Site::className(), 'targetAttribute' => ['site_id' => 'id']],
@@ -161,6 +164,8 @@ class Find extends ActiveRecord
             'link_en',
             'image',
             'three_d',
+            'author_page',
+            'author_page_en'
         ];
 
         return $scenarios;
@@ -292,6 +297,8 @@ class Find extends ActiveRecord
             'image' => 'Изображение',
             'fileImage' => 'Изображение',
             'three_d' => '3D модель',
+            'author_page' => 'Автор описания(страницы)',
+            'author_page_en' => 'Автор описания(страницы) на англ',
         ];
     }
 
