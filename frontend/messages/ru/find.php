@@ -15,4 +15,6 @@ return [
     'Links' => 'Ссылки',
     'Publications' => 'Публикации',
     'Page authors' => 'Авторы страницы'
+    'Model authors' => 'Авторы модели',
+    'Model copyright' => 'Правообладатель модели',
 ];
