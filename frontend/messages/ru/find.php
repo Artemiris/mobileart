@@ -3,7 +3,7 @@
 return [
     'Description' => 'Описание',
     'Manufacturing technique' => 'Техника изготовления',
-    'Traces of disposal' => 'Следы утилизации',
+    'Use-wear traces' => 'Следы утилизации',
     'Storage location' => 'Место хранения',
     'Inventory number' => 'Инвентарный номер',
     'The Museum KAMIS' => 'Музейная КАМИС',
