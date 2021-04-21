@@ -319,6 +319,15 @@ $this->registerJs($script, yii\web\View::POS_READY);
         <div class="clearfix"></div>
 
         <div class="col-xs-6">
+            <?= $form->field($model, 'author_page')->textInput(['autofocus' => true]) ?>
+        </div>
+        <div class="col-xs-6">
+            <?= $form->field($model, 'author_page_en')->textInput() ?>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="col-xs-6">
             <?= $form->field($model, 'fileImage')->fileInput() ?>
         </div>
         <?php if (isset($model->id) and !empty($model->id)): ?>
