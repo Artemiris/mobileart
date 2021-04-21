@@ -24,7 +24,7 @@ $copyright = json_encode(Yii::t('find', 'Copyright'));
 
 $script = <<< JS
         
-     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
     
     $(".tab-header")
     .click(function() {
@@ -39,8 +39,10 @@ $script = <<< JS
             url: modelURL,
             success: function(data) {
                 let d = JSON.parse(data);
-                $('#copyright').html('<p style="padding:4px; margin:4px;">' + $author + ': ' + (d.author || '') + 
-                '</br>' + $copyright + ': ' + (d.copyright || '') + '</p>');
+                let aVal = (d.author || '');
+                let cVal = (d.copyright || '');
+                let cblock = '<p class="authors-block">' + $author + ': ' + aVal + '</br>' + $copyright + ': ' + cVal + '</p>';
+                $('#copyright').html(cblock);
             }
         });
     }
@@ -309,8 +311,6 @@ if (!empty($find->publication)) {
 <?php endif; ?>
 
     <div class="clearfix"></div>
-
-    <br>
 
 <?php if (!empty($tabs)): ?>
     <?= Tabs::widget([
