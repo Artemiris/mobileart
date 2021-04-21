@@ -18,14 +18,40 @@ $this->params['breadcrumbs'] = [
     ['label' => $find->site->name, 'url' => ['site/view', 'id' => $find->site->id]],
     $this->title,
 ];
+$lang = json_encode(Yii::$app->language);
+$author = json_encode(Yii::t('find', 'Model authors'));
+$copyright = json_encode(Yii::t('find', 'Model copyright'));
+
 $script = <<< JS
         
-     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
     
     $(".tab-header")
     .click(function() {
         $(this).tooltip('hide');
     })
+    let iframe = $('iframe');
+    if(iframe.length > 0) {
+        let modelID = iframe.attr('src').split('/').slice(-1)[0];
+        let domain = iframe.attr('src').split('/')[2];
+        let modelURL = 'http://' + domain + '/ru/rest/copyright?id=' + modelID + '&lng=' + $lang;
+        $.ajax({
+            url: modelURL,
+            success: function(data) {
+                let d = JSON.parse(data);
+                let aVal = (d.author || '');
+                let cVal = (d.copyright || '');
+                if(d.author || d.copyright){
+                    let cblock = '<p class="authors-block">'
+                    if(d.author) cblock += $author + ': ' + aVal;
+                    if(d.author && d.copyright) cblock += '</br>';
+                    if(d.copyright) cblock += $copyright + ': ' + cVal;
+                    cblock += '</p>';
+                    $('#copyright').html(cblock);
+                }
+            }
+        });
+    }
 
 JS;
 
@@ -277,6 +303,7 @@ if (!empty($find->publication)) {
             ]); ?>
         <?php else: ?>
             <?= $find->three_d ?>
+            <div id="copyright" style="width:100%"></div>
         <?php endif; ?>
     </div>
     <?php if (Yii::$app->user->can('manager')): ?>
@@ -290,8 +317,6 @@ if (!empty($find->publication)) {
 <?php endif; ?>
 
     <div class="clearfix"></div>
-
-    <br>
 
 <?php if (!empty($tabs)): ?>
     <?= Tabs::widget([
