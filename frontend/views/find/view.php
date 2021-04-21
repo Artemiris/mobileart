@@ -41,8 +41,14 @@ $script = <<< JS
                 let d = JSON.parse(data);
                 let aVal = (d.author || '');
                 let cVal = (d.copyright || '');
-                let cblock = '<p class="authors-block">' + $author + ': ' + aVal + '</br>' + $copyright + ': ' + cVal + '</p>';
-                $('#copyright').html(cblock);
+                if(d.author || d.copyright){
+                    let cblock = '<p class="authors-block">'
+                    if(d.author) cblock += $author + ': ' + aVal;
+                    if(d.author && d.copyright) cblock += '</br>';
+                    if(d.copyright) cblock += $copyright + ': ' + cVal;
+                    cblock += '</p>';
+                    $('#copyright').html(cblock);
+                }
             }
         });
     }
