@@ -21,7 +21,6 @@ class m210421_011820_add_field_page_author_to_find_language extends Migration
     public function safeDown()
     {
         $this->addColumn('find_language', 'author_page');
-        return false;
     }
 
     /*
