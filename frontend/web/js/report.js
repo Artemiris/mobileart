@@ -1,0 +1,1 @@
+$('#report_link').attr('href', window.location.origin + '/report/create?p_ref=' + window.location.href);
