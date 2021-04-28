@@ -47,6 +47,9 @@ use Imagine\Image\Box;
  * @property string $link
  * @property string $link_en
  * @property string $image
+ * @property string $image_author
+ * @property string $image_copyright
+ * @property string $image_source
  * @property string $fileImage
  * @property string $images
  * @property string $fileImages
@@ -103,7 +106,9 @@ class Find extends ActiveRecord
                     'author_excavation',
                     'year',
                     'link',
-                    'author_page'
+                    'author_page',
+                    'image_author',
+                    'image_copyright'
                 ]
             ],
         ];
@@ -116,7 +121,7 @@ class Find extends ActiveRecord
     {
         return [
             [['name', 'name_en', 'site_id'], 'required'],
-            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d', 'author_page'], 'string'],
+            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d', 'author_page', 'image_author', 'image_copyright', 'image_source'], 'string'],
             ['image', 'string'],
             ['year', 'integer'],
             [['site_id'], 'exist', 'skipOnError' => true, 'targetClass' => Site::className(), 'targetAttribute' => ['site_id' => 'id']],
