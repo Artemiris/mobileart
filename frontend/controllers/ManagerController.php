@@ -378,25 +378,20 @@ class ManagerController extends Controller
     {
         if(\Yii::$app->request->isAjax) {
             $data = \Yii::$app->request->post();
+            $model = FindImage::find()->multilingual()->where(['id' => $data['id']])->one();
             if (empty($model)) {
                 throw new HttpException(500);
             }
-            $model = FindImage::find()->multilingual()->where(['id' => $data['id']])->one();
             $model->image_author = $data['author'];
             $model->image_copyright = $data['copyright'];
             $model->image_author_en = $data['author_en'];
             $model->image_copyright_en = $data['copyright_en'];
             $model->image_source = $data['source'];
             if ($model->save()) {
-                \Yii::$app->session->setFlash('success', "Данные внесены");
-                return $this->redirect(['manager/find-image', 'id' => $model->find_id]);
+                return "OK";
             }
-
-            \Yii::$app->session->setFlash('error', "Данные не внесены. " . print_r($model->errors, true));
-            return $this->redirect(['manager/find-image', 'id' => $model->find_id]);
+            return "Данные не внесены. " . print_r($model->errors, true);
         }
-
-        var_dump(\Yii::$app->request->method);
     }
 
     /**
