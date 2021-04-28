@@ -2,8 +2,8 @@
 
 ?>
 
-<div class="center-block">
-    <p>
-        <?= Yii::t('app', 'Thanks for your cooperation') ?>
+<div class="row">
+    <p class="text-center">
+        <?= Yii::t('app', 'Thank you for your comment!') ?>
     </p>
 </div>

@@ -101,11 +101,11 @@ AppAsset::register($this);
                 ↦
                 <a href="http://artemir.nsu.ru/" target="_blank"><?= Yii::t('app', 'Lab "LIA ARTEMIR"') ?></a>
             </p>
-            <div class="pull-right"><?= Yii::t('app', 'Find an error?')?></div>
-        </div>
-        <div class="row">
+            <div class="col-xs-4 pull-right" style="font-size: 12px; text-align: right;">
+                <?= Yii::t('app', 'Incorrect description or copyright infringement?')?> <br>
+                <a id="report_link" target="_blank"><?= Yii::t('app', 'Click to report') ?></a>
+            </div>
             <p class="col-xs-6"><?= Yii::t('app', 'Project supported by RNF #18-78-10079') ?> </p>
-            <div class="pull-right"><a id="report_link" target="_blank"><?= Yii::t('app', 'Please, click here to report') ?></a></div>
         </div>
     </div>
 </footer>

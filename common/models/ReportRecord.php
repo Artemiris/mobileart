@@ -3,6 +3,7 @@
 
 namespace common\models;
 
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
@@ -46,6 +47,15 @@ class ReportRecord extends ActiveRecord
                 'updatedAtAttribute' => false,
                 'value' => new Expression('NOW()'),
             ]
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'description' => Yii::t('app', 'Description of the problem'),
+            'fb_name' => Yii::t('app', 'Your name'),
+            'fb_mail' => Yii::t('app', 'Your e-mail'),
         ];
     }
 }
