@@ -304,6 +304,11 @@ class Find extends ActiveRecord
             'three_d' => '3D модель',
             'author_page' => 'Автор описания(страницы)',
             'author_page_en' => 'Автор описания(страницы) на англ',
+            'image_author' => 'Автор изображения',
+            'image_author_en' => 'Автор изображения на англ',
+            'image_copyright' => 'Правообладатель изображения',
+            'image_copyright_en' => 'Правообладатель изображения на англ',
+            'image_source' => 'Источник изображения',
         ];
     }
 
