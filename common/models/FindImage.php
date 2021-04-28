@@ -4,6 +4,7 @@ namespace common\models;
 
 use omgdef\multilingual\MultilingualBehavior;
 use omgdef\multilingual\MultilingualQuery;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\FileHelper;
 use yii\imagine\Image;
@@ -30,6 +31,11 @@ class FindImage extends ActiveRecord
 
     public $fileImage;
 
+    public static function find()
+    {
+        return new MultilingualQuery(get_called_class());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -37,8 +43,29 @@ class FindImage extends ActiveRecord
     {
         return [
             [['find_id', 'image'], 'required'],
-            [['image'], 'string'],
+            [['image', 'image_source', 'image_author', 'image_copyright'], 'string'],
             [['find_id'], 'exist', 'skipOnError' => true, 'targetClass' => Find::className(), 'targetAttribute' => ['find_id' => 'id']],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'ml' => [
+                'class' => MultilingualBehavior::className(),
+                'languages' => [
+                    'ru' => 'Russian',
+                    'en' => 'English',
+                ],
+                'languageField' => 'locale',
+                'defaultLanguage' => 'ru',
+                'langForeignKey' => 'find_image_id',
+                'tableName' => "{{%find_image_language}}",
+                'attributes' => [
+                    'image_author',
+                    'image_copyright'
+                ]
+            ],
         ];
     }
 

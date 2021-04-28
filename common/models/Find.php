@@ -328,6 +328,11 @@ class Find extends ActiveRecord
         return $this->hasMany(FindImage::className(), ['find_id' => 'id']);
     }
 
+    public function getImagesData()
+    {
+        return FindImage::find()->multilingual()->where(['find_id'=>$this->id])->all();
+    }
+
     /**
      * @return string
      * @throws \yii\base\Exception
