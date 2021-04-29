@@ -17,4 +17,7 @@ return [
     'Page authors' => 'Авторы страницы',
     'Model authors' => 'Авторы модели',
     'Model copyright' => 'Правообладатель модели',
+    'Image authors' => 'Авторы изображения',
+    'Image copyright' => 'Правообладатель изображения',
+    'Image source' => 'Источник изображения',
 ];

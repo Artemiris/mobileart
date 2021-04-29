@@ -21,6 +21,9 @@ $this->params['breadcrumbs'] = [
 $lang = json_encode(Yii::$app->language);
 $author = json_encode(Yii::t('find', 'Model authors'));
 $copyright = json_encode(Yii::t('find', 'Model copyright'));
+$iauthor = json_encode(Yii::t('find', 'Image authors'));
+$icopyright = json_encode(Yii::t('find', 'Image copyright'));
+$isource = json_encode(Yii::t('find', 'Image source'));
 
 $script = <<< JS
         
@@ -32,7 +35,7 @@ $script = <<< JS
     })
     let iframe = $('iframe');
     if(iframe.length > 0) {
-        let modelID = iframe.attr('src').split('/').slice(-1)[0];
+        let modelID = iframe.attr('src').split('/').splice(-1)[0];
         let domain = iframe.attr('src').split('/')[2];
         let modelURL = 'http://' + domain + '/ru/rest/copyright?id=' + modelID + '&lng=' + $lang;
         $.ajax({
@@ -52,6 +55,56 @@ $script = <<< JS
             }
         });
     }
+    
+    $('.img-thumbnail').each(function() {
+      let img = $(this);
+      $.ajax({
+        url: window.origin + '/ru/find/get-image-data?id=' + img.attr('id') + '&lng=' + $lang,
+        success: function(data) {
+            let d = JSON.parse(data);
+            let aVal = (d.image_author || '');
+            let cVal = (d.image_copyright || '');
+            let sVal = (d.image_source || '');
+            let cblock = '<p class="authors-block">'
+            if(d.image_author) cblock += $iauthor + ': ' + aVal;
+            cblock += '</br>';
+            if(d.image_copyright) cblock += $icopyright + ': ' + cVal;
+            cblock += '</br>';
+            if(d.image_source) cblock += $isource + ': ' + sVal;
+            cblock += '</p>';
+            img.parent().attr('data-caption', cblock);
+            img.attr('title', $iauthor + ': ' + aVal + '; ' + $icopyright + ': ' + cVal + '; ' + $isource + ': ' + sVal + '.');
+        },
+        error: function() {
+          console.log('error');
+        }
+      })
+    })
+    
+    $('.main-img').each(function() {
+      let img = $(this);
+      $.ajax({
+        url: window.origin + '/ru/find/get-main-image-data?id=' + $find->id + '&lng=' + $lang,
+        success: function(data) {
+            let d = JSON.parse(data);
+            let aVal = (d.image_author || '');
+            let cVal = (d.image_copyright || '');
+            let sVal = (d.image_source || '');
+            let cblock = '<p class="authors-block">'
+            if(d.image_author) cblock += $iauthor + ': ' + aVal;
+            cblock += '</br>';
+            if(d.image_copyright) cblock += $icopyright + ': ' + cVal;
+            cblock += '</br>';
+            if(d.image_source) cblock += $isource + ': ' + sVal;
+            cblock += '</p>';
+            img.parent().attr('data-caption', cblock);
+            img.attr('title', $iauthor + ': ' + aVal + '; ' + $icopyright + ': ' + cVal + '; ' + $isource + ': ' + sVal + '.');
+        },
+        error: function() {
+          console.log('error');
+        }
+      })
+    })
 
 JS;
 
@@ -274,8 +327,9 @@ if (!empty($find->publication)) {
         'nextEffect' => 'elastic',
         'closeBtn' => false,
         'openOpacity' => true,
+        'beforeShow' => new \yii\web\JsExpression('function(){ this.title = $(this.element).attr("data-caption"); }'),
         'helpers' => [
-            'title' => ['type' => 'float'],
+            'title' => ['type' => 'inside'],
             'buttons' => [],
             'thumbs' => ['width' => 68, 'height' => 50],
             'overlay' => [
@@ -334,7 +388,7 @@ if (!empty($find->publication)) {
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="image">
                     <?= Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
-                        'class' => 'img-responsive'
+                        'class' => 'img-responsive main-img'
                     ]), Find::SRC_IMAGE . '/' . $find->image, [
                         'rel' => 'findImages'
                     ]); ?>
@@ -346,9 +400,10 @@ if (!empty($find->publication)) {
                 <div class="col-xs-6 col-sm-4 col-md-3">
                     <div class="image">
                         <?= Html::a(Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
-                            'class' => 'img-responsive img-thumbnail'
+                            'class' => 'img-responsive img-thumbnail',
+                            'id' => $item->image
                         ]), FindImage::SRC_IMAGE . '/' . $item->image, [
-                            'rel' => 'findImages'
+                            'rel' => 'findImages',
                         ]); ?>
                     </div>
                 </div>
