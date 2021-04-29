@@ -63,7 +63,8 @@ class FindImage extends ActiveRecord
                 'tableName' => "{{%find_image_language}}",
                 'attributes' => [
                     'image_author',
-                    'image_copyright'
+                    'image_copyright',
+                    'image_source'
                 ]
             ],
         ];

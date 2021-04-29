@@ -108,7 +108,8 @@ class Find extends ActiveRecord
                     'link',
                     'author_page',
                     'image_author',
-                    'image_copyright'
+                    'image_copyright',
+                    'image_source'
                 ]
             ],
         ];
@@ -309,6 +310,7 @@ class Find extends ActiveRecord
             'image_copyright' => 'Правообладатель изображения',
             'image_copyright_en' => 'Правообладатель изображения на англ',
             'image_source' => 'Источник изображения',
+            'image_source_en' => 'Источник изображения на англ',
         ];
     }
 

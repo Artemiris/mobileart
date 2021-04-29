@@ -30,8 +30,11 @@ $(document).ready(function () {
                         data:{
                             id : id,
                             author : $('#author_' + id).val(),
+                            author_en : $('#author_en_' + id).val(),
                             copyright : $('#copyright_' + id).val(),
-                            source : $('#source_' + id).val()
+                            copyright_en : $('#copyright_en_' + id).val(),
+                            source : $('#source_' + id).val(),
+                            source_en : $('#source_en_' + id).val()
                         },
                         success: function (data) {
                             $('#'+id).attr('style','background-color:#337AB7;');
@@ -75,7 +78,7 @@ $this->registerJs($script, View::POS_READY);
 <div class="clearfix"></div>
 <?php if (!empty($model->images)): ?>
     <?php foreach ($model->getImagesData() as $item): ?>
-        <div class="row">
+        <div class="row pull-right">
             <div class="col-xs-6">
                 <?= Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, ['class' => 'img-responsive img-thumbnail']) ?>
             </div>
@@ -88,19 +91,23 @@ $this->registerJs($script, View::POS_READY);
                 <?= Html::input('text','copyright',$item->image_copyright, ['class'=>'form-control img_inpt', 'id' => 'copyright_' . $item->id]) ?>
             </div>
             <div class="col-xs-6">
-                <label>Author_en</label>
+                <label>Автор на англ</label>
                 <?= Html::input('text','author_en',$item->image_author_en, ['class'=>'form-control img_inpt', 'id' => 'author_en_' . $item->id]) ?>
             </div>
             <div class="col-xs-6">
-                <label>Copyright_en</label>
+                <label>Правообладатель на англ</label>
                 <?= Html::input('text','copyright_en',$item->image_copyright_en, ['class'=>'form-control img_inpt', 'id' => 'copyright_en_' . $item->id]) ?>
             </div>
             <div class="col-xs-6">
-                <label>Source</label>
+                <label>Источник</label>
                 <?= Html::input('text','source',$item->image_source, ['class'=>'form-control img_inpt', 'id' => 'source_' . $item->id]) ?>
             </div>
+            <div class="col-xs-6">
+                <label>Источник на англ</label>
+                <?= Html::input('text','source_en',$item->image_source_en, ['class'=>'form-control img_inpt', 'id' => 'source_en_' . $item->id]) ?>
+                <br>
+            </div>
         </div>
-        <br>
         <div class="row">
             <div class="col-xs-6 pull-right">
                 <?= Html::a('Удалить', ['manager/image-delete', 'id' => $item->id], [

@@ -387,6 +387,7 @@ class ManagerController extends Controller
             $model->image_author_en = $data['author_en'];
             $model->image_copyright_en = $data['copyright_en'];
             $model->image_source = $data['source'];
+            $model->image_source_en = $data['source_en'];
             if ($model->save()) {
                 return "OK";
             }

@@ -377,6 +377,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
                     <?= $form->field($model, 'image_copyright')->textInput() ?>
                     <?= $form->field($model, 'image_copyright_en')->textInput() ?>
                     <?= $form->field($model, 'image_source')->textInput() ?>
+                    <?= $form->field($model, 'image_source_en')->textInput() ?>
                 </div>
             <?php endif; ?>
         </div>
