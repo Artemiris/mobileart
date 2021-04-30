@@ -5,7 +5,6 @@
 /* @var $find Find */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use common\models\Find;
 use yii\bootstrap\Tabs;
 use common\models\FindImage;
