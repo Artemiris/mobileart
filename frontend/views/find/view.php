@@ -316,6 +316,11 @@ if (!empty($find->publication)) {
                                 . ($fcopyrightset ? "<br>" . $icopyright . ": " .  $find->image_copyright : "")
                                 . ($fsourceset ? "<br>" . $isource . ": " . $find->image_source : ""),
             ]); ?>
+            <div id="icopyright" style="width:100%">
+                <?= '<p class="authors-block">' . ($fauthorset ? $iauthor . ": " . $find->image_author : "")
+                 . ($fcopyrightset ? "<br>" . $icopyright . ": " .  $find->image_copyright : "")
+                 . ($fsourceset ? "<br>" . $isource . ": " . $find->image_source : "") . '</p>'?>
+            </div>
         <?php else: ?>
             <?= $find->three_d ?>
             <div id="copyright" style="width:100%"></div>
