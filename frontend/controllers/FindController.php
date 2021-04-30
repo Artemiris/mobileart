@@ -2,6 +2,8 @@
 namespace frontend\controllers;
 
 use common\models\Find;
+use common\models\FindImage;
+use yii\db\Query;
 use yii\web\Controller;
 
 /**

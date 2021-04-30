@@ -5,7 +5,6 @@
 /* @var $find Find */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use common\models\Find;
 use yii\bootstrap\Tabs;
 use common\models\FindImage;
@@ -21,6 +20,9 @@ $this->params['breadcrumbs'] = [
 $lang = json_encode(Yii::$app->language);
 $author = json_encode(Yii::t('find', 'Model authors'));
 $copyright = json_encode(Yii::t('find', 'Model copyright'));
+$iauthor = Yii::t('find', 'Image authors');
+$icopyright = Yii::t('find', 'Image copyright');
+$isource = Yii::t('find', 'Image source');
 
 $script = <<< JS
         
@@ -32,7 +34,7 @@ $script = <<< JS
     })
     let iframe = $('iframe');
     if(iframe.length > 0) {
-        let modelID = iframe.attr('src').split('/').slice(-1)[0];
+        let modelID = iframe.attr('src').split('/').splice(-1)[0];
         let domain = iframe.attr('src').split('/')[2];
         let modelURL = 'http://' + domain + '/ru/rest/copyright?id=' + modelID + '&lng=' + $lang;
         $.ajax({
@@ -274,8 +276,9 @@ if (!empty($find->publication)) {
         'nextEffect' => 'elastic',
         'closeBtn' => false,
         'openOpacity' => true,
+        'beforeShow' => new \yii\web\JsExpression("function(){ if($(this.element).attr('data-caption') !== '') {this.title =" . "'<p class=\"authors-block\">' + " . " $(this.element).attr('data-caption') " . "+ '</p>'};}"),
         'helpers' => [
-            'title' => ['type' => 'float'],
+            'title' => ['type' => 'inside'],
             'buttons' => [],
             'thumbs' => ['width' => 68, 'height' => 50],
             'overlay' => [
@@ -296,11 +299,27 @@ if (!empty($find->publication)) {
 <?php else: ?>
     <div class="pull-left poster">
         <?php if (empty($find->three_d)): ?>
-            <?= Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
-                'class' => 'img-responsive'
+            <?php
+                $fauthorset = isset($find->image_author) && !empty($find->image_author);
+                $fcopyrightset = isset($find->image_copyright) && !empty($find->image_copyright);
+                $fsourceset = isset($find->image_source) && !empty($find->image_source);
+            ?>
+            <?=Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
+                'class' => 'img-responsive',
+                'title' => ($fauthorset ? "© " . $find->image_author : "")
+                         . ($fcopyrightset ? "\n© " . $find->image_copyright : "")
+                         . ($fsourceset ? "\n© " . $find->image_source : "")
             ]), Find::SRC_IMAGE . '/' . $find->image, [
-                'rel' => 'findImages'
+                'rel' => 'findImages',
+                'data-caption' => ($fauthorset ? $iauthor . ": " . $find->image_author : "")
+                                . ($fcopyrightset ? "<br>" . $icopyright . ": " .  $find->image_copyright : "")
+                                . ($fsourceset ? "<br>" . $isource . ": " . $find->image_source : ""),
             ]); ?>
+            <div id="icopyright" style="width:100%">
+                <?= '<p class="authors-block">' . ($fauthorset ? $iauthor . ": " . $find->image_author : "")
+                 . ($fcopyrightset ? "<br>" . $icopyright . ": " .  $find->image_copyright : "")
+                 . ($fsourceset ? "<br>" . $isource . ": " . $find->image_source : "") . '</p>'?>
+            </div>
         <?php else: ?>
             <?= $find->three_d ?>
             <div id="copyright" style="width:100%"></div>
@@ -333,10 +352,21 @@ if (!empty($find->publication)) {
         <?php if (!empty($find->three_d)): ?>
             <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="image">
-                    <?= Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
-                        'class' => 'img-responsive'
+                    <?php
+                        $fauthorset = isset($find->image_author) && !empty($find->image_author);
+                        $fcopyrightset = isset($find->image_copyright) && !empty($find->image_copyright);
+                        $fsourceset = isset($find->image_source) && !empty($find->image_source);
+                    ?>
+                    <?=Html::a(Html::img(Find::SRC_IMAGE . '/' . $find->thumbnailImage, [
+                        'class' => 'img-responsive main-img',
+                        'title' => ($fauthorset ? "© " . $find->image_author : "")
+                                 . ($fcopyrightset ? "\n© " . $find->image_copyright : "")
+                                 . ($fsourceset ? "\n© " . $find->image_source : ""),
                     ]), Find::SRC_IMAGE . '/' . $find->image, [
-                        'rel' => 'findImages'
+                        'rel' => 'findImages',
+                        'data-caption' => ($fauthorset ? $iauthor . ": " . $find->image_author : "")
+                                        . ($fcopyrightset ? "<br>" . $icopyright . ": " .  $find->image_copyright : "")
+                                        . ($fsourceset ? "<br>" . $isource . ": " . $find->image_source : ""),
                     ]); ?>
                 </div>
             </div>
@@ -345,10 +375,22 @@ if (!empty($find->publication)) {
             <?php foreach ($find->images as $item): ?>
                 <div class="col-xs-6 col-sm-4 col-md-3">
                     <div class="image">
-                        <?= Html::a(Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
-                            'class' => 'img-responsive img-thumbnail'
+                        <?php
+                            $iauthorset = isset($item->image_author) && !empty($item->image_author);
+                            $icopyrightset = isset($item->image_copyright) && !empty($item->image_copyright);
+                            $isourceset = isset($item->image_source) && !empty($item->image_source);
+                        ?>
+                        <?=Html::a(Html::img(FindImage::SRC_IMAGE . '/' . FindImage::THUMBNAIL_PREFIX . $item->image, [
+                            'class' => 'img-responsive img-thumbnail',
+                            'id' => $item->image,
+                            'title' => ($iauthorset ? "© " . $item->image_author : "")
+                                     . ($icopyrightset ? "\n© " . $item->image_copyright : "")
+                                     . ($isourceset ? "\n© " . $item->image_source : ""),
                         ]), FindImage::SRC_IMAGE . '/' . $item->image, [
-                            'rel' => 'findImages'
+                            'rel' => 'findImages',
+                            'data-caption' => ($iauthorset ? $iauthor . ": " . $item->image_author : "")
+                                            . ($icopyrightset ?  "<br>" . $icopyright . ": " .  $item->image_copyright : "")
+                                            . ($isourceset ? "<br>" . $isource . ": " . $item->image_source : ""),
                         ]); ?>
                     </div>
                 </div>

@@ -47,6 +47,9 @@ use Imagine\Image\Box;
  * @property string $link
  * @property string $link_en
  * @property string $image
+ * @property string $image_author
+ * @property string $image_copyright
+ * @property string $image_source
  * @property string $fileImage
  * @property string $images
  * @property string $fileImages
@@ -103,7 +106,10 @@ class Find extends ActiveRecord
                     'author_excavation',
                     'year',
                     'link',
-                    'author_page'
+                    'author_page',
+                    'image_author',
+                    'image_copyright',
+                    'image_source'
                 ]
             ],
         ];
@@ -116,7 +122,7 @@ class Find extends ActiveRecord
     {
         return [
             [['name', 'name_en', 'site_id'], 'required'],
-            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d', 'author_page'], 'string'],
+            [['name', 'annotation', 'description', 'publication', 'technique', 'traces_disposal', 'storage_location', 'inventory_number', 'museum_kamis', 'size', 'material', 'dating', 'culture', 'author_excavation', 'link', 'three_d', 'author_page', 'image_author', 'image_copyright', 'image_source'], 'string'],
             ['image', 'string'],
             ['year', 'integer'],
             [['site_id'], 'exist', 'skipOnError' => true, 'targetClass' => Site::className(), 'targetAttribute' => ['site_id' => 'id']],
@@ -299,6 +305,12 @@ class Find extends ActiveRecord
             'three_d' => '3D модель',
             'author_page' => 'Автор описания(страницы)',
             'author_page_en' => 'Автор описания(страницы) на англ',
+            'image_author' => 'Автор изображения',
+            'image_author_en' => 'Автор изображения на англ',
+            'image_copyright' => 'Правообладатель изображения',
+            'image_copyright_en' => 'Правообладатель изображения на англ',
+            'image_source' => 'Источник изображения',
+            'image_source_en' => 'Источник изображения на англ',
         ];
     }
 
@@ -316,6 +328,11 @@ class Find extends ActiveRecord
     public function getImages()
     {
         return $this->hasMany(FindImage::className(), ['find_id' => 'id']);
+    }
+
+    public function getImagesData()
+    {
+        return FindImage::find()->multilingual()->where(['find_id'=>$this->id])->all();
     }
 
     /**

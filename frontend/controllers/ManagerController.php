@@ -374,6 +374,27 @@ class ManagerController extends Controller
         return $this->redirect(['manager/find-image', 'id' => $find->id]);
     }
 
+    public function actionFindImageSave()
+    {
+        if(\Yii::$app->request->isAjax) {
+            $data = \Yii::$app->request->post();
+            $model = FindImage::find()->multilingual()->where(['id' => $data['id']])->one();
+            if (empty($model)) {
+                throw new HttpException(500);
+            }
+            $model->image_author = $data['author'];
+            $model->image_copyright = $data['copyright'];
+            $model->image_author_en = $data['author_en'];
+            $model->image_copyright_en = $data['copyright_en'];
+            $model->image_source = $data['source'];
+            $model->image_source_en = $data['source_en'];
+            if ($model->save()) {
+                return "OK";
+            }
+            return "Данные не внесены. " . print_r($model->errors, true);
+        }
+    }
+
     /**
      * @return string
      */
