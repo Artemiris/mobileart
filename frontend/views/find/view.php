@@ -276,7 +276,7 @@ if (!empty($find->publication)) {
         'nextEffect' => 'elastic',
         'closeBtn' => false,
         'openOpacity' => true,
-        'beforeShow' => new \yii\web\JsExpression('function(){ this.title = $(this.element).attr("data-caption"); }'),
+        'beforeShow' => new \yii\web\JsExpression("function(){ if($(this.element).attr('data-caption') !== '') {this.title =" . "'<p class=\"authors-block\">' + " . " $(this.element).attr('data-caption') " . "+ '</p>'};}"),
         'helpers' => [
             'title' => ['type' => 'inside'],
             'buttons' => [],
