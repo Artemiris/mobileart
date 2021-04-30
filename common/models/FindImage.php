@@ -4,11 +4,8 @@ namespace common\models;
 
 use omgdef\multilingual\MultilingualBehavior;
 use omgdef\multilingual\MultilingualQuery;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\helpers\FileHelper;
-use yii\imagine\Image;
-use Imagine\Image\Box;
 
 /**
  * FindImage model

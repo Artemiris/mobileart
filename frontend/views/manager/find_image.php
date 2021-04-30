@@ -16,45 +16,47 @@ $this->params['breadcrumbs'] = [
     ['label' => $model->name, 'url' => ['/manager/find-update', 'id' => $model->id]],
     $this->title,
 ];
-$script = "
-$(document).ready(function () {
-    $('.save-btn').each(
-        function () {
-            $(this).click(
-                function () {
-                    let id = $(this).attr('id');
-
-                    $.ajax({
-                        url: window.origin + '/ru/manager/find-image-save/',
-                        type: 'post',
-                        data:{
-                            id : id,
-                            author : $('#author_' + id).val(),
-                            author_en : $('#author_en_' + id).val(),
-                            copyright : $('#copyright_' + id).val(),
-                            copyright_en : $('#copyright_en_' + id).val(),
-                            source : $('#source_' + id).val(),
-                            source_en : $('#source_en_' + id).val()
-                        },
-                        success: function (data) {
-                            $('#'+id).attr('style','background-color:#337AB7;');
-                        },
-                        error: function (x, e, c) {
-                            console.log(e);
-                            console.log(c);
-                        }
-                    });
-                    return false;
-                })
-        });
-    $('.img_inpt').each(function () {
-        $(this).keyup(function () {
-            let id = $(this).attr('id').split('_').splice(-1)[0];
-            $('#' + id).attr('style', 'background-color:#FFAA00;');
+$script = <<< JS
+    $(document).ready(function () {
+        $('.save-btn').each(
+            function () {
+                $(this).click(
+                    function () {
+                        let id = $(this).attr('id');
+    
+                        $.ajax({
+                            url: window.origin + '/ru/manager/find-image-save/',
+                            type: 'post',
+                            data:{
+                                id : id,
+                                author : $('#author_' + id).val(),
+                                author_en : $('#author_en_' + id).val(),
+                                copyright : $('#copyright_' + id).val(),
+                                copyright_en : $('#copyright_en_' + id).val(),
+                                source : $('#source_' + id).val(),
+                                source_en : $('#source_en_' + id).val()
+                            },
+                            success: function (data) {
+                                $('#'+id).attr('style','background-color:#337AB7;');
+                                alert('Изменения сохранены');
+                            },
+                            error: function (x, e, c) {
+                                console.log(e);
+                                console.log(c);
+                            }
+                        });
+                        return false;
+                    })
+            });
+        $('.img_inpt').each(function () {
+            $(this).keyup(function () {
+                let id = $(this).attr('id').split('_').splice(-1)[0];
+                $('#' + id).attr('style', 'background-color:#FFAA00;');
+            })
         })
-    })
-});
-";
+    });
+JS;
+
 $this->registerJs($script, View::POS_READY);
 
 ?>
