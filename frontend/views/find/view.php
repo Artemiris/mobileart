@@ -35,8 +35,8 @@ $script = <<< JS
     let iframe = $('iframe');
     if(iframe.length > 0) {
         let modelID = iframe.attr('src').split('/').splice(-1)[0];
-        let domain = iframe.attr('src').split('/')[2];
-        let modelURL = 'http://' + domain + '/ru/rest/copyright?id=' + modelID + '&lng=' + $lang;
+        let domain = iframe.attr('src').split('/');
+        let modelURL = domain[0] + '//' + domain[2] + '/ru/rest/copyright?id=' + modelID + '&lng=' + $lang;
         $.ajax({
             url: modelURL,
             success: function(data) {
