@@ -69,7 +69,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
 
 
 <h1><?= Html::encode($region->name) ?></h1>
-
+<?= Html::a('PDF', ['region/pdf', 'id' => $region->id], ['class' => 'btn btn-primary pull-right']) ?>
 <?php if (Yii::$app->user->can('manager')): ?>
     <?= Html::a(Yii::t('app', 'Edit'), ['manager/region-update', 'id' => $region->id], ['class' => 'btn btn-primary pull-right']) ?>
 <?php endif; ?>

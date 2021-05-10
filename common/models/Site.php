@@ -177,6 +177,11 @@ class Site extends ActiveRecord
         return $this->hasMany(Find::className(), ['site_id' => 'id']);
     }
 
+    public function getFindsData()
+    {
+        return Find::find()->where(['site_id'=>$this->id])->all();
+    }
+
     /**
      * @return string
      * @throws \yii\base\Exception
