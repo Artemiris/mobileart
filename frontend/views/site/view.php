@@ -71,7 +71,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
 
 
 <?php if (empty($site->image)): ?>
-
+    <?= Html::a('PDF', ['site/pdf', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>
@@ -85,7 +85,7 @@ $this->registerCssFile('css/site.css?201902191707', ['depends' => ['yii\bootstra
             'rel' => 'findImages'
         ]); ?>
     </div>
-
+    <?= Html::a('PDF', ['site/pdf', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/site-update', 'id' => $site->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>
