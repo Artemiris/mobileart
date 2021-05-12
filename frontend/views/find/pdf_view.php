@@ -11,7 +11,7 @@ use yii\helpers\Html;
 
     <style>
         .t_img{
-            width: 46%;
+            width: 105mm;
         }
         .td_cult{
             width: 50%;
@@ -22,9 +22,6 @@ use yii\helpers\Html;
         }
         span.body{
             font-size: 14pt;
-        }
-        .tb_out{
-            padding-left: -1mm;
         }
         .td_a{
             font-size: 8pt;
@@ -46,15 +43,20 @@ use yii\helpers\Html;
     <h1>
         <?= empty($parentName) ? $find->name : $parentName . '. ' . $find->name ?>
     </h1>
-
+<?php if(!empty($image_objects)):?>
+    <?php $image_main = array_shift($image_objects); ?>
+    <?= Html::img($image_main['image']) ?>
+<?php endif; ?>
 <?php if (!empty($find->description)): ?>
     <h3><?= Yii::t('find', 'Description') ?></h3>
     <?= $find->description ?>
 <?php endif; ?>
 
 <?php foreach ($attrib_objects as $attrib_object):?>
-    <h3><?= $attrib_object['name'] ?></h3>
-    <?= $attrib_object['data'] ?>
+    <div style="page-break-inside: avoid">
+        <h3><?= $attrib_object['name'] ?></h3>
+        <?= $attrib_object['data'] ?>
+    </div>
 <?php endforeach;?>
 
 <?php $line_cnt = intdiv((count($image_objects) + 1), 2); ?>
