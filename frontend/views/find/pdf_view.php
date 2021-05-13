@@ -112,3 +112,8 @@ use yii\helpers\Html;
         </tr>
     </table>
 <?php endif; ?>
+<?php if(!empty($find->author_page)):?>
+    <div>
+        <span style="font-size: 14px; font-style: italic"><?= Yii::t('app', 'Description authors') . ': ' . $find->author_page ?></span>
+    </div>
+<?php endif; ?>

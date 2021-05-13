@@ -9,40 +9,40 @@ use yii\helpers\Html;
 
 ?>
 
-    <style>
-        .t_img{
-            width: 105mm;
-        }
-        .td_cult{
-            width: 50%;
-        }
-        span.head{
-            font-size: 14pt;
-            font-weight: bold;
-        }
-        span.body{
-            font-size: 14pt;
-        }
-        .td_a{
-            font-size: 8pt;
-        }
-        .tb_img{
-            width: 100%;
-            vertical-align: top;
-        }
-        .tb_att{
-            width: 100%;
-            page-break-inside: avoid;
-            vertical-align: top;
-        }
-        .td_img_block{
-            width: 50%;
-            vertical-align: top;
-        }
-    </style>
-    <h1>
-        <?= empty($parentName) ? $find->name : $parentName . '. ' . $find->name ?>
-    </h1>
+<style>
+    .t_img{
+        width: 105mm;
+    }
+    .td_cult{
+        width: 50%;
+    }
+    span.head{
+        font-size: 14pt;
+        font-weight: bold;
+    }
+    span.body{
+        font-size: 14pt;
+    }
+    .td_a{
+        font-size: 8pt;
+    }
+    .tb_img{
+        width: 100%;
+        vertical-align: top;
+    }
+    .tb_att{
+        width: 100%;
+        page-break-inside: avoid;
+        vertical-align: top;
+    }
+    .td_img_block{
+        width: 50%;
+        vertical-align: top;
+    }
+</style>
+<h1>
+    <?= empty($parentName) ? $find->name : $parentName . '. ' . $find->name ?>
+</h1>
 <?php if(!empty($image_objects)):?>
     <?php $image_main = array_shift($image_objects); ?>
     <?= Html::img($image_main['image']) ?>
@@ -111,4 +111,9 @@ use yii\helpers\Html;
             </td>
         </tr>
     </table>
+<?php endif; ?>
+<?php if(!empty($find->author_page)):?>
+    <div>
+        <span style="font-size: 14px; font-style: italic"><?= Yii::t('app', 'Description authors') . ': ' . $find->author_page ?></span>
+    </div>
 <?php endif; ?>
