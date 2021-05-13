@@ -26,7 +26,8 @@
         "mihaildev/yii2-ckeditor": "*",
         "yiisoft/yii2-imagine": "*",
         "rmrevin/yii2-fontawesome": "~3.3",
-        "mpdf/mpdf": "^8.0"
+        "mpdf/mpdf": "^8.0",
+        "sabre/xml": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
