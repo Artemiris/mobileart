@@ -292,6 +292,7 @@ if (!empty($find->publication)) {
 
 <?php if (empty($find->image) and empty($find->three_d)): ?>
     <?= Html::a('PDF', ['find/pdf', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?= Html::a('LIDO', ['find/lido', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>
@@ -327,6 +328,7 @@ if (!empty($find->publication)) {
         <?php endif; ?>
     </div>
     <?= Html::a('PDF', ['find/pdf', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
+    <?= Html::a('LIDO', ['find/lido', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php if (Yii::$app->user->can('manager')): ?>
         <?= Html::a(Yii::t('app', 'Edit'), ['manager/find-update', 'id' => $find->id], ['class' => 'btn btn-primary pull-right']) ?>
     <?php endif; ?>

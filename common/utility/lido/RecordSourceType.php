@@ -57,7 +57,7 @@ class RecordSourceType implements \Sabre\Xml\XmlSerializable
                 [
                     'name'=>'lido:legalBodyID',
                     'attributes'=>[
-                        'lido:source'=>$this->legalBodySource,
+
                         'lido:type'=>$this->legalBodyType
                     ],
                     'value'=>$this->legalBodyID
