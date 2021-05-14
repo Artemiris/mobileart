@@ -3,7 +3,23 @@ namespace frontend\controllers;
 
 use common\models\Find;
 use common\models\FindImage;
+use common\utility\lido\ActorInRoleType;
+use common\utility\lido\AdministrativeMetadataType;
+use common\utility\lido\AppellationValueType;
+use common\utility\lido\DescriptiveMetadataType;
+use common\utility\lido\EventType;
+use common\utility\lido\Lido;
+use common\utility\lido\ObjectClassificationType;
+use common\utility\lido\ObjectDescriptionSetType;
+use common\utility\lido\ObjectTitleSetType;
+use common\utility\lido\ObjectTitleType;
+use common\utility\lido\ObjectWorkTypeType;
+use common\utility\lido\RecordIDType;
+use common\utility\lido\RecordSourceType;
+use common\utility\lido\RecordType;
 use common\utility\PdfUtil;
+use common\utility\XmlService;
+use yii\helpers\Url;
 use Mpdf\Mpdf;
 use Yii;
 use yii\db\Query;
@@ -85,5 +101,90 @@ class FindController extends Controller
             'parentName' => $parentName
         ]));
         $mpdf->Output($parentName . '. ' . $find->name . '.pdf', 'D');
+    }
+
+    public function actionLido($id)
+    {
+        $appLang = Yii::$app->language;
+        Yii::$app->language = 'ru';
+        $find = Find::find()->multilingual()->where(['id'=>$id])->one();
+        $service = new XmlService();
+        $service->initLidoMap();
+        $lido = new Lido();
+
+        $lido->recordID = new RecordIDType(Url::home(true), 'local', $id);
+        $descriptiveMetaEn = new DescriptiveMetadataType();
+        $descriptiveMetaEn->lang = 'en';
+        $descriptiveMetaEn->titleSets = [
+            new ObjectTitleSetType([
+                new ObjectTitleType([
+                    new AppellationValueType('en', true, $find->name_en)
+                ])
+            ])
+        ];
+        $descriptiveMetaEn->classifications = [
+            new ObjectClassificationType('local',[
+                'Object'
+            ])
+        ];
+        $descriptiveMetaEn->objectWorkTypes = [
+            new ObjectWorkTypeType(['Mobiliary Art'])
+        ];
+        $descriptiveMetaEn->descriptionSets = [
+            new ObjectDescriptionSetType('Description', strip_tags(preg_replace( "/\r|\n/", "", $find->description_en)), 'local'),
+            new ObjectDescriptionSetType('Use-wear traces', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal_en)), 'local'),
+        ];
+        $descriptiveMetaEn->events = [
+            new EventType('Excavation',
+            new ActorInRoleType('person', 'Executive',[
+                new AppellationValueType('en',true,$find->author_excavation_en)
+            ]), $find->year_en)
+        ];
+        $descriptiveMetaRu = new DescriptiveMetadataType();
+        $descriptiveMetaRu->lang = 'ru';
+        $descriptiveMetaRu->titleSets = [
+            new ObjectTitleSetType([
+                new ObjectTitleType([
+                    new AppellationValueType('ru', true, $find->name)
+                ])
+            ])
+        ];
+        $descriptiveMetaRu->classifications = [
+            new ObjectClassificationType('local',[
+                'Объект'
+            ])
+        ];
+        $descriptiveMetaRu->objectWorkTypes = [
+            new ObjectWorkTypeType(['Мобильное искусство'])
+        ];
+        $descriptiveMetaRu->descriptionSets = [
+            new ObjectDescriptionSetType('Описание', strip_tags(preg_replace( "/\r|\n/", "", $find->description)), 'local'),
+            new ObjectDescriptionSetType('Следы использования', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal)), 'local'),
+        ];
+        $descriptiveMetaRu->events = [
+            new EventType('Раскопки',
+                new ActorInRoleType('person', 'Исполнитель',[
+                    new AppellationValueType('ru',true,$find->author_excavation)
+                ]), $find->year)
+        ];
+        $lido->descriptiveMeta[] = $descriptiveMetaEn;
+        $lido->descriptiveMeta[] = $descriptiveMetaRu;
+
+        $administrativeMeta = new AdministrativeMetadataType();
+        $administrativeMeta->record = new RecordType($id, 'Single object',
+            new RecordSourceType(Url::home(true), ' ', 'URL',
+                new AppellationValueType('en', true,'Information system of portable art of Siberia and Far East'), Url::home(true)
+            )
+        );
+        $lido->administrativeMeta[] = $administrativeMeta;
+        $filename = '../../storage/web/lido_obj_temp.xml';
+        $xml_result = $service->write('lido:lido', $lido);
+        file_put_contents($filename, $xml_result);
+
+        Yii::$app->language = $appLang;
+        if(file_exists($filename))
+            Yii::$app->response->sendFile($filename, 'lido_obj_'.$id.'.xml');
+        else
+            throw new HttpException(404);
     }
 }
