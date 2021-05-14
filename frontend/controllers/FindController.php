@@ -177,8 +177,9 @@ class FindController extends Controller
             )
         );
         $lido->administrativeMeta[] = $administrativeMeta;
-        $filename = '..\..\storage\web\lido_obj_temp.xml';
-        file_put_contents($filename, $service->write('lido:lido', $lido));
+        $filename = '../../storage/web/lido_obj_temp.xml';
+        $xml_result = $service->write('lido:lido', $lido);
+        file_put_contents($filename, $xml_result);
 
         Yii::$app->language = $appLang;
         if(file_exists($filename))
