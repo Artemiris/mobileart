@@ -58,7 +58,7 @@ class RegionController extends Controller
             <hr>
             <table width="100%">
                 <tr>
-                    <td width="45%">' . Yii::t('app', 'Lab "LIA ARTEMIR"') . '</td>
+                    <td width="45%">' . Yii::t('app', 'Prehistoric Art in Eurasia Lab') . '</td>
                     <td width="10%" align="center">{PAGENO}</td>
                     <td width="45%" style="text-align: right;">' . Yii::t('app', 'Novosibirsk State University') . '</td>
                 </tr>
@@ -66,7 +66,7 @@ class RegionController extends Controller
                     <td width="45%">' . HTML::a('mobileart.artemiris.org/region/view/' . $id,
                 'http://mobileart.artemiris.org/' . Yii::$app->language . '/region/view/' . $id) . '</td>
                     <td width="10%" align="center"></td>
-                    <td width="45%" style="text-align: right;">' . Yii::t('app', 'Project supported by RNF #18-78-10079') . '</td>
+                    <td width="45%" style="text-align: right;">' . Yii::t('app', 'Project supported by RSF #18-78-10079') . '</td>
                 </tr>
             </table>'
         );
@@ -77,7 +77,7 @@ class RegionController extends Controller
                 <hr>
                 <table width="100%">
                     <tr>
-                        <td width="45%">' . Yii::t('app', 'Lab "LIA ARTEMIR"') . '</td>
+                        <td width="45%">' . Yii::t('app', 'Prehistoric Art in Eurasia Lab') . '</td>
                         <td width="10%" align="center">{PAGENO}</td>
                         <td width="45%" style="text-align: right;">' . Yii::t('app', 'Novosibirsk State University') . '</td>
                     </tr>
@@ -85,7 +85,7 @@ class RegionController extends Controller
                         <td width="45%">' . HTML::a('mobileart.artemiris.org/site/view/' . $site->id,
                 'http://mobileart.artemiris.org/' . Yii::$app->language . '/site/view/' . $site->id) . '</td>
                         <td width="10%" align="center"></td>
-                        <td width="45%" style="text-align: right;">' . Yii::t('app', 'Project supported by RNF #18-78-10079') . '</td>
+                        <td width="45%" style="text-align: right;">' . Yii::t('app', 'Project supported by RSF #18-78-10079') . '</td>
                     </tr>
                 </table>'
             );
@@ -100,7 +100,7 @@ class RegionController extends Controller
                     <hr>
                     <table width="100%">
                         <tr>
-                            <td width="45%">' . Yii::t('app', 'Lab "LIA ARTEMIR"') . '</td>
+                            <td width="45%">' . Yii::t('app', 'Prehistoric Art in Eurasia Lab') . '</td>
                             <td width="10%" align="center">{PAGENO}</td>
                             <td width="45%" style="text-align: right;">' . Yii::t('app', 'Novosibirsk State University') . '</td>
                         </tr>
@@ -108,7 +108,7 @@ class RegionController extends Controller
                             <td width="45%">' . HTML::a('mobileart.artemiris.org/find/view/' . $find->id,
                                 'http://mobileart.artemiris.org/' . Yii::$app->language . '/find/view/' . $find->id) . '</td>
                             <td width="10%" align="center"></td>
-                            <td width="45%" style="text-align: right;">' . Yii::t('app', 'Project supported by RNF #18-78-10079') . '</td>
+                            <td width="45%" style="text-align: right;">' . Yii::t('app', 'Project supported by RSF #18-78-10079') . '</td>
                         </tr>
                     </table>'
                 );

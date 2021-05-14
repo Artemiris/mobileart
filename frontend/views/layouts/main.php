@@ -99,13 +99,13 @@ AppAsset::register($this);
                 &copy;
                 <a href="https://www.nsu.ru/n/" target="_blank"><?= Yii::t('app', 'Novosibirsk State University') ?></a>
                 ↦
-                <a href="http://artemir.nsu.ru/" target="_blank"><?= Yii::t('app', 'Lab "LIA ARTEMIR"') ?></a>
+                <a href="http://artemir.nsu.ru/" target="_blank"><?= Yii::t('app', 'Prehistoric Art in Eurasia Lab') ?></a>
             </p>
             <div class="col-xs-4 pull-right" style="font-size: 12px; text-align: right;">
                 <?= Yii::t('app', 'Incorrect description or copyright infringement?')?> <br>
                 <a id="report_link" target="_blank"><?= Yii::t('app', 'Click to report') ?></a>
             </div>
-            <p class="col-xs-6"><?= Yii::t('app', 'Project supported by RNF #18-78-10079') ?> </p>
+            <p class="col-xs-6"><?= Yii::t('app', 'Project supported by RSF #18-78-10079') ?> </p>
         </div>
     </div>
 </footer>
