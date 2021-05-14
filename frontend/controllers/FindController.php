@@ -173,11 +173,11 @@ class FindController extends Controller
         $administrativeMeta = new AdministrativeMetadataType();
         $administrativeMeta->record = new RecordType($id, 'Single object',
             new RecordSourceType(Url::home(true), ' ', 'URL',
-                new AppellationValueType('en', true,'IS Mobileart'), Url::home(true)
+                new AppellationValueType('en', true,'Information system of portable art of Siberia and Far East'), Url::home(true)
             )
         );
         $lido->administrativeMeta[] = $administrativeMeta;
-        $filename = 'lido_obj_temp.xml';
+        $filename = '..\..\storage\web\lido_obj_temp.xml';
         file_put_contents($filename, $service->write('lido:lido', $lido));
 
         Yii::$app->language = $appLang;
