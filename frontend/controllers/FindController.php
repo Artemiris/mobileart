@@ -141,7 +141,7 @@ class FindController extends Controller
         if(!empty($find->author_excavation_en))
             $descriptiveMetaEn->events = [
                 new EventType('Excavation',
-                    new ActorInRoleType('person', 'Executive', [
+                    new ActorInRoleType('person', 'The author of the excavations', [
                         new AppellationValueType('en', true, $find->author_excavation_en)
                     ]), $find->year_en)
             ];
@@ -166,12 +166,12 @@ class FindController extends Controller
         $descriptiveMetaRu->descriptionSets[] = new ObjectDescriptionSetType('Описание', strip_tags(preg_replace( "/\r|\n/", "", $find->description)), 'local');
 
         if(!empty($find->traces_disposal))
-            $descriptiveMetaEn->descriptionSets[] = new ObjectDescriptionSetType('Use-wear traces', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal)), 'local');
+            $descriptiveMetaEn->descriptionSets[] = new ObjectDescriptionSetType('Следы использования', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal)), 'local');
 
         if(!empty($find->author_excavation))
             $descriptiveMetaRu->events = [
                 new EventType('Раскопки',
-                    new ActorInRoleType('person', 'Исполнитель', [
+                    new ActorInRoleType('person', 'Автор раскопок', [
                         new AppellationValueType('ru', true, $find->author_excavation)
                     ]), $find->year)
             ];
