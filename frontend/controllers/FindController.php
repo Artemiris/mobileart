@@ -108,6 +108,8 @@ class FindController extends Controller
         $appLang = Yii::$app->language;
         Yii::$app->language = 'ru';
         $find = Find::find()->multilingual()->where(['id'=>$id])->one();
+        if(empty($find))
+            throw new HttpException(404);
         $service = new XmlService();
         $service->initLidoMap();
         $lido = new Lido();
@@ -130,16 +132,20 @@ class FindController extends Controller
         $descriptiveMetaEn->objectWorkTypes = [
             new ObjectWorkTypeType(['Mobiliary Art'])
         ];
-        $descriptiveMetaEn->descriptionSets = [
-            new ObjectDescriptionSetType('Description', strip_tags(preg_replace( "/\r|\n/", "", $find->description_en)), 'local'),
-            new ObjectDescriptionSetType('Use-wear traces', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal_en)), 'local'),
-        ];
-        $descriptiveMetaEn->events = [
-            new EventType('Excavation',
-            new ActorInRoleType('person', 'Executive',[
-                new AppellationValueType('en',true,$find->author_excavation_en)
-            ]), $find->year_en)
-        ];
+
+        $descriptiveMetaEn->descriptionSets[] = new ObjectDescriptionSetType('Description', strip_tags(preg_replace( "/\r|\n/", "", $find->description_en)), 'local');
+
+        if(!empty($find->traces_disposal_en))
+            $descriptiveMetaEn->descriptionSets[] = new ObjectDescriptionSetType('Use-wear traces', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal_en)), 'local');
+
+        if(!empty($find->author_excavation_en))
+            $descriptiveMetaEn->events = [
+                new EventType('Excavation',
+                    new ActorInRoleType('person', 'The author of the excavations', [
+                        new AppellationValueType('en', true, $find->author_excavation_en)
+                    ]), $find->year_en)
+            ];
+
         $descriptiveMetaRu = new DescriptiveMetadataType();
         $descriptiveMetaRu->lang = 'ru';
         $descriptiveMetaRu->titleSets = [
@@ -157,16 +163,19 @@ class FindController extends Controller
         $descriptiveMetaRu->objectWorkTypes = [
             new ObjectWorkTypeType(['Мобильное искусство'])
         ];
-        $descriptiveMetaRu->descriptionSets = [
-            new ObjectDescriptionSetType('Описание', strip_tags(preg_replace( "/\r|\n/", "", $find->description)), 'local'),
-            new ObjectDescriptionSetType('Следы использования', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal)), 'local'),
-        ];
-        $descriptiveMetaRu->events = [
-            new EventType('Раскопки',
-                new ActorInRoleType('person', 'Исполнитель',[
-                    new AppellationValueType('ru',true,$find->author_excavation)
-                ]), $find->year)
-        ];
+        $descriptiveMetaRu->descriptionSets[] = new ObjectDescriptionSetType('Описание', strip_tags(preg_replace( "/\r|\n/", "", $find->description)), 'local');
+
+        if(!empty($find->traces_disposal))
+            $descriptiveMetaEn->descriptionSets[] = new ObjectDescriptionSetType('Следы использования', strip_tags(preg_replace( "/\r|\n/", "", $find->traces_disposal)), 'local');
+
+        if(!empty($find->author_excavation))
+            $descriptiveMetaRu->events = [
+                new EventType('Раскопки',
+                    new ActorInRoleType('person', 'Автор раскопок', [
+                        new AppellationValueType('ru', true, $find->author_excavation)
+                    ]), $find->year)
+            ];
+
         $lido->descriptiveMeta[] = $descriptiveMetaEn;
         $lido->descriptiveMeta[] = $descriptiveMetaRu;
 
